@@ -27,7 +27,7 @@
                     <create-user @user="createUser" />
                 </div>
                 <div v-if="show_edited_user">
-                    <update-user :data="user_edit" @update="updatedUser" />
+                    <update-user :edit="user_edit" @update="updatedUser" />
                 </div>
                 <div class="grid grid-cols-3 gap-6">
                     <div v-for="user in users" :key="user.id" class="h-full flex items-center border p-4 rounded-lg" :class="user.id === user_edit.id ? 'border-gray-300 bg-gray-100' : 'border-gray-200'">
@@ -93,7 +93,6 @@
                     .then( res => {
                         this.users.forEach( user => {
                             if(user.id === res.id){
-                                // console.log(res);
                                 user = res;
                             } 
                         })
@@ -102,6 +101,7 @@
             deleteUser (id) {
                 Services.deleteUser(id)
                     .then( res => {
+                        console.log(res);
                         const users = this.users.filter(user => {
                             if( user.id !== id) {
                                 return user;

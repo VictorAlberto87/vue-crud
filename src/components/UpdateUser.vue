@@ -23,7 +23,7 @@
     export default {
         name: 'update-user',
         props: {
-            data: {
+            edit: {
                 type: Object,
                 required: true
             }
@@ -34,9 +34,9 @@
             }
         },
         watch: {
-            data(value, oldValue) {
+            edit(value, oldValue) {
                 if(value !== oldValue) {
-                    this.user = this.data;
+                    this.user = this.edit;
                 }
             }
         },
@@ -46,7 +46,7 @@
             }
         },
         mounted() {
-            this.user = this.data;
+            this.user = this.edit;
         }
     }
 </script>
