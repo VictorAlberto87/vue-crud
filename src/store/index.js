@@ -15,21 +15,19 @@ const store =  new Vuex.Store({
             state.users = payload
         },
         addUser (state, payload) {
-            state.users.push(payload);
+            state.users.push(payload)
         },
         removeUser (state, payload) {
             const users = state.users.filter(user => {
                 if( user.id !== payload) {
-                    return user;
+                    return user
                 }
             })
-            state.users = users;
+            state.users = users
         },
         updateUser (state, payload) {
             const user = state.users.find(user => user.id === payload.id)
             Object.assign(user, payload)
-
-            console.log(state.users);
         },
         setUserEdit(state, payload) {
             state.user_edit = payload
@@ -48,7 +46,7 @@ const store =  new Vuex.Store({
         createUser ({ commit }, payload) {
             Services.createUser(payload)
                 .then( res => {
-                    commit('addUser', res);
+                    commit('addUser', res)
                 })
         },
         updateUser ({ commit, state }) {
