@@ -10,7 +10,7 @@ services.getUsers = () => {
     return Services.get('/users').then(res => res.data)
 }
 
-services.updatedUser = (user) => {
+services.updateUser = (user) => {
     return Services.put(`/users/${user.id}`, user).then(res => res.data);
 }
 

@@ -27,7 +27,7 @@
                     <create-user @user="createUser" />
                 </div>
                 <div v-if="show_edited_user">
-                    <update-user :edit="user_edit" @update="updatedUser" />
+                    <update-user :edit="user_edit" @update="updateUser" />
                 </div>
                 <div class="grid grid-cols-3 gap-6">
                     <div v-for="user in users" :key="user.id" class="h-full flex items-center border p-4 rounded-lg" :class="user.id === user_edit.id ? 'border-gray-300 bg-gray-100' : 'border-gray-200'">
@@ -58,7 +58,7 @@
 
 
 <script>
-    import Services from '@/services/services'
+    import { mapState, mapActions, mapMutations } from 'vuex'
     import CreateUser from './CreateUser'
     import UpdateUser from './UpdateUser'
     export default {
@@ -69,61 +69,29 @@
         },
         data () {
             return {
-                users: [],
-                user_edit: {},
                 show_create_user: false,
                 show_edited_user: false
             }
         },
         methods: {
-            getUsers () {
-                Services.getUsers()
-                    .then(res => { 
-                        this.users = res
-                    })
-            },
-            createUser(user) {
-                Services.createUser(user)
-                    .then( res => {
-                        this.users.push(res);
-                    })
-            },
-            updatedUser (user) {
-                Services.updatedUser(user)
-                    .then( res => {
-                        this.users.forEach( user => {
-                            if(user.id === res.id){
-                                user = res;
-                            } 
-                        })
-                    })
-            },
-            deleteUser (id) {
-                Services.deleteUser(id)
-                    .then( res => {
-                        console.log(res);
-                        const users = this.users.filter(user => {
-                            if( user.id !== id) {
-                                return user;
-                            }
-                        })
-                        this.users = users;
-                    })
-            },
+            ...mapActions(['getUsers', 'createUser', 'updateUser', 'deleteUser']),
+            ...mapMutations(['setUserEdit', 'clearUserEdit']),
             showCreateUser () {
-                this.show_create_user = true;
-                this.show_edited_user = !this.show_create_user;
-                this.user_edit = {}
+                this.show_create_user = true
+                this.show_edited_user = !this.show_create_user
+                this.clearUserEdit()
             },
             showEditedUser (user) {
-                this.show_edited_user = true;
-                this.show_create_user = !this.show_edited_user;
-                this.user_edit = user;
+                this.show_edited_user = true
+                this.show_create_user = !this.show_edited_user
+                this.setUserEdit(user)
             }
+        },
+        computed: {
+            ...mapState(['users', 'user_edit']),
         },
         mounted() {
             this.getUsers();
         }
-
     }
 </script>
