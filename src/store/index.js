@@ -18,12 +18,11 @@ const store =  new Vuex.Store({
             state.users.push(payload)
         },
         removeUser (state, payload) {
-            const users = state.users.filter(user => {
+            state.users = state.users.filter(user => {
                 if( user.id !== payload) {
                     return user
                 }
             })
-            state.users = users
         },
         updateUser (state, payload) {
             const user = state.users.find(user => user.id === payload.id)
@@ -57,7 +56,7 @@ const store =  new Vuex.Store({
         },
         deleteUser ( {commit }, payload) {
             Services.deleteUser(payload)
-                .then( res => {
+                .then( () => {
                     commit('removeUser', payload)                    
                 })
         }
