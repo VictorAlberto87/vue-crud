@@ -24,12 +24,12 @@
                     <p class="lg:w-2/3 mx-auto leading-relaxed text-base">Whatever cardigan tote bag tumblr hexagon brooklyn asymmetrical gentrify, subway tile poke farm-to-table. Franzen you probably haven't heard of them.</p>
                 </div>
                 <div v-if="show_create_user">
-                    <create-user @user="createUser" />
+                    <create-user />
                 </div>
                 <div v-if="show_edited_user">
-                    <update-user :edit="user_edit" @update="updateUser" />
+                    <update-user />
                 </div>
-                <div class="grid grid-cols-3 gap-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <div v-for="user in users" :key="user.id" class="h-full flex items-center border p-4 rounded-lg" :class="user.id === user_edit.id ? 'border-gray-300 bg-gray-100' : 'border-gray-200'">
                         <img alt="team" class="w-16 h-16 bg-gray-100 object-cover object-center flex-shrink-0 rounded-full mr-4" src="https://dummyimage.com/80x80">
                         <div class="flex-grow relative">
@@ -74,7 +74,7 @@
             }
         },
         methods: {
-            ...mapActions(['getUsers', 'createUser', 'updateUser', 'deleteUser']),
+            ...mapActions(['getUsers', 'deleteUser']),
             ...mapMutations(['setUserEdit', 'clearUserEdit']),
             showCreateUser () {
                 this.show_create_user = true
